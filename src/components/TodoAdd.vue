@@ -1,7 +1,7 @@
 <template>
   <div class="input-add">
     <!-- 输入框 -->
-    <input type="text" name="todo" v-model="todoContent" @keyup.enter="add"/>
+    <input type="text" name="todo" v-model="todoContent" @keyup.enter="add" />
     <button @click="add">
       <!--添加按钮 -->
       <i class="plus"></i>
@@ -13,6 +13,7 @@
 // 组件抽离再导出
 export default {
   name: 'ToDoAdd',
+  props: ['tid'],
   data () {
     return {
       todoContent: ''
@@ -28,6 +29,7 @@ export default {
         return
       }
       const todo = {
+        id: this.tid,
         isComplete: false,
         todoContent: this.todoContent
       }
@@ -73,8 +75,8 @@ export default {
       background-position: center;
       background-repeat: no-repeat;
     }
-    &:hover{
-      cursor:pointer;
+    &:hover {
+      cursor: pointer;
     }
   }
 }
