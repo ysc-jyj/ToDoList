@@ -2,7 +2,7 @@
   <!-- 将内容都在进label方便调节自定义的check-button -->
   <div class="todo-item" :class="todo.isComplete ? 'done' : ''">
     <label>
-      <input type="checkbox" :checked="todo.isComplete" @click="$emit('change-state', $event)" />
+      <input type="checkbox" :checked="todo.isComplete" @click="$emit('change-state', todo.id)" />
       {{ todo.todoContent}}
       <span class="check-button"></span>
       <button @click="del">

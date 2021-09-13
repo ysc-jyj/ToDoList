@@ -1,13 +1,7 @@
 <template>
   <div class="todo-list">
     <!-- 根据复选框的状态，修改isComplete状态， -->
-    <ToDoItem
-      v-for="(todo,index) in todos"
-      :key="index"
-      :todo="todo"
-      @change-state="todo.isComplete = $event.target.checked"
-      v-on="$listeners"
-    ></ToDoItem>
+    <ToDoItem v-for="(todo,index) in todos" :key="index" :todo="todo" v-on="$listeners"></ToDoItem>
   </div>
 </template>
 

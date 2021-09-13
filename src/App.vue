@@ -6,7 +6,7 @@
       <ToDoAdd @addTodo="handleAdd" :tid="todos.length+1"></ToDoAdd>
       <!-- 通过active动态绑定activeFilter传递 接收子组件的选中分类 -->
       <ToDoFilter :active="activeFilter" @change-filter="activeFilter = $event"></ToDoFilter>
-      <ToDoList :todos="filterTodos" @del-todo="delTodo"></ToDoList>
+      <ToDoList :todos="filterTodos" @del-todo="delTodo" @change-state="handlderState"></ToDoList>
     </div>
     <!--  <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -27,6 +27,9 @@ export default {
     ToDoFilter,
     ToDoList
   },
+  created () {
+    this.todos = this.getData()
+  },
   data () {
     return {
       todos: [],
@@ -37,6 +40,7 @@ export default {
   methods: {
     handleAdd (todo) {
       this.todos.unshift(todo)
+      this.saveData(this.todos)// 保存数据
       console.log(this.todos)
     },
     delTodo (id) {
@@ -45,6 +49,27 @@ export default {
           return val
         }
       })
+      this.saveData(this.todos) // 保存
+    },
+    handlderState (id) {
+      this.todos = this.todos.filter((val) => {
+        if (val.id === id) {
+          val.isComplete = !val.isComplete
+        }
+        return val
+      })
+      this.saveData(this.todos)
+    },
+    saveData (data) {
+      localStorage.setItem('todolist', JSON.stringify(data))
+    },
+    getData () {
+      const data = localStorage.getItem('todolist')
+      if (data !== null) {
+        return JSON.parse(data)
+      } else {
+        return []
+      }
     }
   },
   computed: {
